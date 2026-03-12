@@ -1,23 +1,47 @@
+set number
+set showmatch
+set nocompatible
+set autoindent
+set smartindent
+set hlsearch
+set tags=tags
+set expandtab
+set ts =4
+set sw =4
+set ruler
+syntax on
+filetype indent on
+
+map <F12> :e ~/.vimrc <cr>
+
+let mapleader="\<Space>"
+map <Leader>h 0
+map <Leader>l $
+
+
 function! Compile()
 	exec "w"
 	if &filetype == "cpp"
-		exec "!g++ -std=c++11 -g -o %< % -Wall"
+		exec "!g++ -g -o %<.exe % -std=gnu++11 -Wall"
 	endif
 	if &filetype == "c"
-		exec "!gcc -g -o %< % -Wall"
-	endif
-	if &filetype == "pascal"
-		exec "!fpc -g %"
+		exec "!gcc -g -o %<.exe % -Wall"
 	endif
 	if &filetype == "tex" || &filetype == "plaintex" || &filetype == "context"
 		exec "!xelatex %"
+	endif
+	if &filetype == "java"
+		exec "!javac %"
 	endif
 endfunc
 
 function! Run()
 	exec "w"
-	if &filetype == "cpp" || &filetype == "pascal" || &filetype == "c"
-		exec "!./%<"
+	if &filetype == "cpp" || &filetype == "pascal"
+		exec "!%<.exe"
+	endif
+	if &filetype == "c"
+		exec "!%<.exe"
 	endif
 	if &filetype == "python"
 		exec "!python %"
@@ -26,22 +50,19 @@ function! Run()
 		exec "!bash %"
 	endif
 	if &filetype == "tex" || &filetype == "plaintex" || &filetype == "context"
-		exec "!evince %<.pdf"
+		exec "!start %<.pdf"
 	endif
 	if &filetype == "html"
-		exec "!google-chrome %"
+		exec "!chrome C:/Users/Administrator/%"
 	endif
-	if &filetype == "ruby"
-		exec "!ruby %"
-	endif
-	if &filetype == "haskell"
-		exec "!runghc %"
+	if &filetype == "java"
+		exec "!java %<"
 	endif
 endfunc
 
 function! Debug()
 	exec "w"
-	if &filetype == "cpp" || &filetype == "pascal"
+	if &filetype == "cpp" || &filetype == "pascal" ||&filetype == "c"
 		exec "!gdb %<"
 	endif
 	if &filetype == "python"
