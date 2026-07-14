@@ -9,6 +9,7 @@ set expandtab
 set ts =4
 set sw =4
 set ruler
+set encoding=utf-8
 syntax on
 filetype indent on
 
